@@ -47,23 +47,31 @@ export default function ManageCandidatePage() {
         if (error) throw error;
 
         // 🔹 Format hasil join
-        const formatted = data.map((app) => ({
-          id: app.candidates.id,
-          name: app.candidates.full_name,
-          email: app.candidates.email,
-          phone: app.candidates.phone,
-          dob: app.candidates.date_of_birth
-            ? new Date(app.candidates.date_of_birth).toLocaleDateString("id-ID", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })
-            : "-",
-          domicile: app.candidates.domicile,
-          gender: app.candidates.gender,
-          linkedin: app.candidates.linkedin,
-          applied_at: app.applied_at,
-        }));
+        const formatted = data.flatMap((app) => {
+          const candidatesArray = Array.isArray(app.candidates)
+            ? app.candidates
+            : app.candidates
+            ? [app.candidates] // jika objek, ubah menjadi array
+            : []; // jika null/undefined, pakai array kosong
+
+          return candidatesArray.map((cand) => ({
+            id: cand.id,
+            name: cand.full_name,
+            email: cand.email,
+            phone: cand.phone,
+            dob: cand.date_of_birth
+              ? new Date(cand.date_of_birth).toLocaleDateString("id-ID", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })
+              : "-",
+            domicile: cand.domicile,
+            gender: cand.gender,
+            linkedin: cand.linkedin,
+            applied_at: app.applied_at,
+          }));
+        });
 
         setCandidates(formatted);
       } catch (err) {
