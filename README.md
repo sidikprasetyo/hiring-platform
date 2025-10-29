@@ -9,8 +9,8 @@ This project is a web application for job applicants to browse available job lis
 - **Frontend:** Next.js, React, Tailwind CSS
 - **Backend:** Supabase (Database + Auth)
 - **Icons & UI Components:** Lucide-react, React Icons
-- **Deployment:** Vercel (optional)
-- **Others:** TypeScript, JavaScript
+- **Deployment:** Vercel
+- **Others:** TypeScript
 
 ## How to Run Locally
 
