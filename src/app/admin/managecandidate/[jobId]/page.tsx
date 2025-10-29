@@ -47,20 +47,23 @@ export default function ManageCandidatePage() {
         if (error) throw error;
 
         // 🔹 Format hasil join
-        const formatted = data
-          .map((app) =>
-            app.candidates.map((cand) => ({
-              id: cand.id,
-              name: cand.full_name,
-              email: cand.email,
-              phone: cand.phone,
-              date_of_birth: cand.date_of_birth,
-              domicile: cand.domicile,
-              gender: cand.gender,
-              linkedin: cand.linkedin,
-            }))
-          )
-          .flat(); // flat() untuk gabungkan array
+        const formatted = data.map((app) => ({
+          id: app.candidates.id,
+          name: app.candidates.full_name,
+          email: app.candidates.email,
+          phone: app.candidates.phone,
+          dob: app.candidates.date_of_birth
+            ? new Date(app.candidates.date_of_birth).toLocaleDateString("id-ID", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })
+            : "-",
+          domicile: app.candidates.domicile,
+          gender: app.candidates.gender,
+          linkedin: app.candidates.linkedin,
+          applied_at: app.applied_at,
+        }));
 
         setCandidates(formatted);
       } catch (err) {
